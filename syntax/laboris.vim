@@ -34,20 +34,48 @@ function s:CreateMatch(name, regex, conceal)
   exec 'syn match ' . a:name . ' /' . a:regex . '/ contained ' . conceal
 endfunction
 
-call s:CreateRegion('laborisTask', '^', '$', 'fold contains=laborisDateTime,laborisProject', '')
-call s:CreateRegion('laborisDone', '^[xX]', '$', 'fold contains=laborisDateTime,laborisProject', '')
+call s:CreateRegion('htmlH1', '^\s*#', '\($\|[^\\]#\+\)', 'concealends', 'laborisDelimiter')
+call s:CreateRegion('htmlH2', '^\s*##', '\($\|[^\\]#\+\)', 'concealends', 'laborisDelimiter')
+call s:CreateRegion('htmlH3', '^\s*###', '\($\|[^\\]#\+\)', 'concealends', 'laborisDelimiter')
+call s:CreateRegion('htmlH4', '^\s*####', '\($\|[^\\]#\+\)', 'concealends', 'laborisDelimiter')
+call s:CreateRegion('htmlH5', '^\s*#####', '\($\|[^\\]#\+\)', 'concealends', 'laborisDelimiter')
+call s:CreateRegion('htmlH6', '^\s*######', '\($\|[^\\]#\+\)', 'concealends', 'laborisDelimiter')
 
-call s:CreateMatch('laborisDateTime', '\v(0?[1-9]|[12][0-9]|3[01])-(0?[0-9]|1[012])-([0-9]{4}|[0-9]{2})(T([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)?', '')
+syn cluster laborisHeader contains=htmlH1,htmlH2,htmlH3,htmlH4,htmlH5,htmlH6
 
+call s:CreateRegion('laborisItalic', '\*', '\*', 'concealends', 'laborisDelimiter')
+call s:CreateRegion('laborisBold', '\*\*', '\*\*', 'concealends', 'laborisDelimiter')
+
+call s:CreateRegion('laborisTask', '^(0)', '$', 'fold contains=laborisDateTime,laborisDateTimeB,laborisDue,laborisProject,laborisTarget,@headers,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisDone', '^x', '$', 'fold contains=laborisDateTime,laborisProject,laborisTarget', '')
+call s:CreateRegion('laborisTask1', '^(1)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget', '')
+call s:CreateRegion('laborisTask2', '^(2)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget', '')
+call s:CreateRegion('laborisTask3', '^(3)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget', '')
+call s:CreateRegion('laborisTask4', '^(4)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget', '')
+call s:CreateRegion('laborisTask5', '^(5)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget', '')
+
+call s:CreateMatch('laborisDue', '\v(due:)((0?[1-9]|[12][0-9]|3[01])[\/\.-](0?[0-9]|1[012])[\/\.-]([0-9]{4}|[0-9]{2})([T[:blank:]]([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)?)', '')
+call s:CreateMatch('laborisDateTime', '\v(due:[^[:blank:]]*)@<!((0?[1-9]|[12][0-9]|3[01])[\/\.-](0?[0-9]|1[012])[\/\.-]([0-9]{4}|[0-9]{2})([T[:blank:]]([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)?)', '')
 
 call s:CreateMatch('laborisProject', '+[^[:blank:]]\+', '')
+call s:CreateMatch('laborisTarget', '@[^[:blank:]]\+', '')
 
-hi def laborisDateTimeHl ctermfg=3
-hi def link laborisDateTime PreProc
-hi def laborisProjectHl ctermfg=6
-hi def link laborisProject Special
-" hi def link laborisTask TODO
+hi def link laborisDateTime  Type
+hi def link laborisProject   Special
+hi def link laborisTarget    Keyword
+hi def link laborisDue       WarningMsg
 
-hi def link laborisDone Comment
+hi def link laborisDone      Comment
+hi def link laborisTask1     Statement
+hi def link laborisTask2     Character
+hi def link laborisTask3     Label
+hi def link laborisTask4     Function
+hi def link laborisTask5     String
+
+hi def laborisItalic cterm=italic term=italic gui=italic
+" hi def link todoItalicEnd todoItalic
+hi def laborisBold cterm=bold term=bold gui=bold
+
+hi def link laborisDelimiter Delimiter
 
 let b:current_syntax = "laboris"
