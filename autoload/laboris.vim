@@ -15,7 +15,7 @@ function! s:remove_priority()
 endfunction
 
 function! s:get_current_date()
-    return strftime('%d-%m-%Y %H:%M:%S')
+    return strftime('%d-%m-%YT%H:%M:%S')
 endfunction
 
 function! laboris#prepend_date()
@@ -28,7 +28,7 @@ function! laboris#replace_date()
                 \ exists('g:laboris_existing_date') && g:laboris_existing_date == 'n'
         return
     endif
-    execute 's/^\(([0-9]) \)\?\(\d\{2\}-\d\{2\}-\d\{2,4\} \d\{2\}:\d\{2\}:\d\{2\} \)\?/\1' . s:get_current_date() . ' /'
+    execute 's/^\(([0-9]) \)\?\(\d\{2\}-\d\{2\}-\d\{2,4\}T\d\{2\}:\d\{2\}:\d\{2\} \)\?/\1' . s:get_current_date() . ' /'
 endfunction
 
 function! laboris#mark_as_done()
@@ -78,18 +78,6 @@ endfunction
 
 function! laboris#sort_by_project() range
     execute a:firstline . "," . a:lastline . "sort /\\(^\\| \\)\\zs+[^[:blank:]]\\+/ r"
-endfunction
-
-function! laboris#sort_by_date() range
-    let l:date_regex = "\\d\\{2\\}-\\d\\{2\\}-\\d\\{2,4\\}"
-    execute a:firstline . "," . a:lastline . "sort /" . l:date_regex . "/ r"
-    execute a:firstline . "," . a:lastline . "g!/" . l:date_regex . "/m" . a:lastline
-endfunction
-
-function! laboris#sort_by_due_date() range
-    let l:date_regex = "due:\\d\\{2\\}-\\d\\{2\\}-\\d\\{2,4\\}"
-    execute a:firstline . "," . a:lastline . "sort /" . l:date_regex . "/ r"
-    execute a:firstline . "," . a:lastline . "g!/" . l:date_regex . "/m" . a:lastline
 endfunction
 
 function! laboris#prioritize_increase()
