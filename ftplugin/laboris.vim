@@ -17,6 +17,10 @@ nnoremap <script> <silent> <buffer> <localleader>s@ :%call laboris#sort_by_conte
 vnoremap <script> <silent> <buffer> <localleader>s@ :call laboris#sort_by_context()<CR>
 nnoremap <script> <silent> <buffer> <localleader>s+ :%call laboris#sort_by_project()<CR>
 vnoremap <script> <silent> <buffer> <localleader>s+ :call laboris#sort_by_project()<CR>
+nnoremap <script> <silent> <buffer> <localleader>sd :%call laboris#sort_by_date()<CR>
+vnoremap <script> <silent> <buffer> <localleader>sd :call laboris#sort_by_date()<CR>
+nnoremap <script> <silent> <buffer> <localleader>sdd :%call laboris#sort_by_due_date()<CR>
+vnoremap <script> <silent> <buffer> <localleader>sdd :call laboris#sort_by_due_date()<CR>
 
 nnoremap <script> <silent> <buffer> <localleader>j :call laboris#prioritize_increase()<CR>
 vnoremap <script> <silent> <buffer> <localleader>j :call laboris#prioritize_increase()<CR>

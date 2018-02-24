@@ -46,30 +46,31 @@ syn cluster laborisHeader contains=htmlH1,htmlH2,htmlH3,htmlH4,htmlH5,htmlH6
 call s:CreateRegion('laborisItalic', '\*', '\*', 'concealends', 'laborisDelimiter')
 call s:CreateRegion('laborisBold', '\*\*', '\*\*', 'concealends', 'laborisDelimiter')
 
-call s:CreateRegion('laborisTask', '^([^12345])', '$', 'fold contains=laborisDateTime,laborisDateTimeB,laborisDue,laborisProject,laborisTarget,@headers,laborisItalic,laborisBold', '')
-call s:CreateRegion('laborisDone', '^x', '$', 'fold contains=laborisDateTime,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
-call s:CreateRegion('laborisTask1', '^(1)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
-call s:CreateRegion('laborisTask2', '^(2)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
-call s:CreateRegion('laborisTask3', '^(3)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
-call s:CreateRegion('laborisTask4', '^(4)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
-call s:CreateRegion('laborisTask5', '^(5)', '$', 'fold contains=laborisDateTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisTask', '^([^12345])', '$', 'fold contains=laborisDateTime,laborisTime,laborisDue,laborisProject,laborisTarget,@headers,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisDone', '^x', '$', 'fold contains=laborisDateTime,laborisTime,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisTask1', '^(1)', '$', 'fold contains=laborisDateTime,laborisTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisTask2', '^(2)', '$', 'fold contains=laborisDateTime,laborisTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisTask3', '^(3)', '$', 'fold contains=laborisDateTime,laborisTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisTask4', '^(4)', '$', 'fold contains=laborisDateTime,laborisTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
+call s:CreateRegion('laborisTask5', '^(5)', '$', 'fold contains=laborisDateTime,laborisTime,laborisDue,laborisProject,laborisTarget,laborisItalic,laborisBold', '')
 
-" call s:CreateMatch('laborisDue', '\v(due:)(([0-9]{4}|[0-9]{2})[\/\.-](0?[0-9]|1[012])[\/\.-]([12][0-9]|3[01]|0?[1-9])([T[:blank:]]([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)?)', '')
-call s:CreateMatch('laborisDue', '\v(due:)((0?[1-9]|[12][0-9]|3[01])[\/\.-](0?[0-9]|1[012])[\/\.-]([0-9]{4,2})([T\s]([01]?[0-9]|2[0-4]):([0-5]?[0-9]):([0-5]?[0-9])?)?)', '')
-call s:CreateMatch('laborisDateTime', '\v(due:[^\s]*)@<!((0?[1-9]|[12][0-9]|3[01])[\/\.-](0?[0-9]|1[012])[\/\.-]([0-9]{4}|[0-9]{2})([T\s]([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)?)', '')
+call s:CreateMatch('laborisDue', '\v(due:)(([0-9]{4,2})[\/\.-](1[012]|0?[0-9])[\/\.-]([12][0-9]|3[01]|0?[1-9])([T\s]([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)?)', '')
+call s:CreateMatch('laborisTime', '\v(due:[^\s]*)@<!(([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)', '')
+call s:CreateMatch('laborisDateTime', '\v(due:[^\s]*)@<!(([0-9]{4,2})[\/\.-](1[012]|0?[0-9])[\/\.-]([12][0-9]|3[01]|0?[1-9])([T\s]([01]?[0-9]|2[0-4]):([0-5]?[0-9])(:[0-5]?[0-9])?)?)', '')
 
 call s:CreateMatch('laborisProject', '+[^[:blank:]]\+', '')
 call s:CreateMatch('laborisTarget', '@[^[:blank:]]\+', '')
 
 hi def link laborisDateTime  Type
+hi def link laborisTime      Type
 hi def link laborisProject   Special
 hi def link laborisTarget    Keyword
 hi def link laborisDue       WarningMsg
 
 hi def link laborisDone      Comment
-hi def link laborisTask1     Statement
+hi def link laborisTask1     Error
 hi def link laborisTask2     Character
-hi def link laborisTask3     Label
+hi def link laborisTask3     Todo
 hi def link laborisTask4     Function
 hi def link laborisTask5     String
 
